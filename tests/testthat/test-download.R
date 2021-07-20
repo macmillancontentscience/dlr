@@ -12,6 +12,41 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-test_that("downloading to cache works", {
-  # TODO: Copy general test idea from {RBERT}, I think.
+# We're going to assume download.file works, so really we just need to test the
+# overall idea of the processing. This is a good case for mocking!
+
+test_that("downloading to path works", {
+  stubbed_download <- function(...) {
+    message("Downloading.")
+    file.copy(
+      from = here::here("tests", "testthat", "sample.txt"),
+      to = tempdir()
+    )
+  }
+  mockery::stub(
+    where = download_path,
+    what = "utils::download.file",
+    how = stubbed_download
+  )
+
+  expect_message(
+    test_return <- download_path(
+      url = "https:://fakesite.com/sample.txt",
+      path = tempdir()
+    ),
+    "Downloading."
+  )
+  expect_identical(
+    test_return,
+    fs::path(tempdir(), "sample.txt")
+  )
+
+  # The mock downloader only messages if the file doesn't exist.
+  expect_message(
+    download_path(
+      url = "https:://fakesite.com/sample.txt",
+      path = tempdir()
+    ),
+    NA
+  )
 })
