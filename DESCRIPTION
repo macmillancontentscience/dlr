@@ -29,3 +29,5 @@ Imports:
     fs,
     rappdirs,
     utils
+URL: https://github.com/macmillancontentscience/dlr
+BugReports: https://github.com/macmillancontentscience/dlr/issues
