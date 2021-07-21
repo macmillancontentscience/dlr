@@ -25,18 +25,21 @@
 #' @param redownload Logical; should the file be redownloaded if it already
 #'   exists locally?
 #'
-#' @return The full path to the file.
+#' @return The full path to the local file.
 #' @export
 #'
 #' @examples
 #' \donttest{
 #' if(interactive()){
-#'   download_path()
+#'   download_path(
+#'     url = "https://raw.githubusercontent.com/macmillancontentscience/dlr/main/README.Rmd",
+#'     path = tempdir()
+#'   )
 #' }
 #' }
 download_path <- function(url, path, redownload = FALSE) {
   fs::dir_create(path)
-  path <- file.path(path, fs::path_file(url))
+  path <- fs::path(path, fs::path_file(url))
 
   if (!file.exists(path) || redownload) {
     utils::download.file(url, path, mode = "wb")
@@ -45,8 +48,30 @@ download_path <- function(url, path, redownload = FALSE) {
   return(path)
 }
 
+#' Download to App Cache Dir
+#'
+#' Download files to an application cache dir, using platform conventions as
+#' defined in \code{\link[rappdirs]{user_cache_dir}}.
+#'
+#' @inheritParams download_path
+#' @param appname Character; the name of the application that will "own" this
+#'   file, such as the name of a package.
+#'
+#' @return The full path to the local file.
+#' @export
+#'
+#' @examples
+#' \donttest{
+#' if(interactive()){
+#'   download_cache(
+#'     url = "https://raw.githubusercontent.com/macmillancontentscience/dlr/main/README.Rmd",
+#'     appname = "dlr"
+#'   )
+#' }
+#' }
 download_cache <- function(url, appname, redownload = FALSE) {
-  path <- rappdirs::user_cache_dir(appname)
-
-  return(download_path(url, path, redownload))
+  # The only way this differs from download_path is that it uses an automatic
+  # path, and that makes it hard to test. Relying on manual tests for this.
+  path <- rappdirs::user_cache_dir(appname) # nocov
+  return(download_path(url, path, redownload)) # nocov
 }
