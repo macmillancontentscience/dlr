@@ -22,27 +22,51 @@
 #' @param url Character; the location of the file on the internet.
 #' @param path Character; the local directory to which the file should be
 #'   written.
+#' @param filename Character; an optional filename for the file (by default, the
+#'   filename of the remote file is used).
+#' @param process_f A function or one-sided formula to apply to the downloaded
+#'   file before saving. The temporary path to the downloaded file will be
+#'   passed as the first argument to this function, and the target path will be
+#'   passed as the second argument.
 #' @param redownload Logical; should the file be redownloaded if it already
 #'   exists locally?
+#' @param ... Additional arguments passed to \code{process_f}.
 #'
 #' @return The full path to the local file.
 #' @export
 #'
 #' @examples
 #' \donttest{
-#' if(interactive()){
+#' if (interactive()) {
 #'   download_path(
 #'     url = "https://raw.githubusercontent.com/macmillancontentscience/dlr/main/README.Rmd",
 #'     path = tempdir()
 #'   )
 #' }
 #' }
-download_path <- function(url, path, redownload = FALSE) {
+download_path <- function(url,
+                          path,
+                          filename = fs::path_file(url),
+                          process_f = NULL,
+                          redownload = FALSE,
+                          ...) {
   fs::dir_create(path)
-  path <- fs::path(path, fs::path_file(url))
+  path <- fs::path(path, filename)
 
   if (!file.exists(path) || redownload) {
-    utils::download.file(url, path, mode = "wb")
+    if (is.null(process_f)) {
+      utils::download.file(url, path, mode = "wb")
+    } else {
+      temp_path <- tempfile(
+        fileext = paste0(
+          ".",
+          fs::path_ext(fs::path_file(url))
+        )
+      )
+      on.exit(unlink(temp_path))
+      utils::download.file(url, temp_path, mode = "wb")
+      process_f(temp_path, path, ...)
+    }
   }
 
   return(path)
@@ -62,14 +86,19 @@ download_path <- function(url, path, redownload = FALSE) {
 #'
 #' @examples
 #' \donttest{
-#' if(interactive()){
+#' if (interactive()) {
 #'   download_cache(
 #'     url = "https://raw.githubusercontent.com/macmillancontentscience/dlr/main/README.Rmd",
 #'     appname = "dlr"
 #'   )
 #' }
 #' }
-download_cache <- function(url, appname, redownload = FALSE) {
+download_cache <- function(url,
+                           appname,
+                           filename = fs::path_file(url),
+                           process_f = NULL,
+                           redownload = FALSE,
+                           ...) {
   # The only way this differs from download_path is that it uses an automatic
   # path, and that makes it hard to test. Relying on manual tests for this.
   path <- rappdirs::user_cache_dir(appname) # nocov

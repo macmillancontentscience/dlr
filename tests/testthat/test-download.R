@@ -16,11 +16,16 @@
 # overall idea of the processing. This is a good case for mocking!
 
 test_that("downloading to path works", {
+  on.exit(
+    unlink(
+      fs::path(tempdir(), "sample.txt")
+    )
+  )
   stubbed_download <- function(...) {
     message("Downloading.")
-    file.copy(
-      from = here::here("tests", "testthat", "sample.txt"),
-      to = tempdir()
+    writeLines(
+      "This is a sample file to pretend to download.",
+      con = fs::path(tempdir(), "sample.txt")
     )
   }
   mockery::stub(
@@ -48,5 +53,24 @@ test_that("downloading to path works", {
       path = tempdir()
     ),
     NA
+  )
+
+  # Let's try a processor that does something else.
+  test_process_f <- function(tempy, really, ...) {
+    tempy <- normalizePath(tempy, mustWork = FALSE)
+    really <- normalizePath(really, mustWork = FALSE)
+    message(
+      "Copying from ", tempy, " to ", really
+    )
+  }
+
+  expect_message(
+    download_path(
+      url = "https:://fakesite.com/sample.txt",
+      path = tempdir(),
+      filename = "process.txt",
+      process_f = test_process_f
+    ),
+    regexp = "Copying from .+\\.txt to .+process\\.txt"
   )
 })

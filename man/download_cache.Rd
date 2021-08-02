@@ -4,7 +4,14 @@
 \alias{download_cache}
 \title{Download to App Cache Dir}
 \usage{
-download_cache(url, appname, redownload = FALSE)
+download_cache(
+  url,
+  appname,
+  filename = fs::path_file(url),
+  process_f = NULL,
+  redownload = FALSE,
+  ...
+)
 }
 \arguments{
 \item{url}{Character; the location of the file on the internet.}
@@ -12,8 +19,18 @@ download_cache(url, appname, redownload = FALSE)
 \item{appname}{Character; the name of the application that will "own" this
 file, such as the name of a package.}
 
+\item{filename}{Character; an optional filename for the file (by default, the
+filename of the remote file is used).}
+
+\item{process_f}{A function or one-sided formula to apply to the downloaded
+file before saving. The temporary path to the downloaded file will be
+passed as the first argument to this function, and the target path will be
+passed as the second argument.}
+
 \item{redownload}{Logical; should the file be redownloaded if it already
 exists locally?}
+
+\item{...}{Additional arguments passed to \code{process_f}.}
 }
 \value{
 The full path to the local file.
