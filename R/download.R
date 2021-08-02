@@ -107,6 +107,15 @@ download_cache <- function(url,
                            ...) {
   # The only way this differs from download_path is that it uses an automatic
   # path, and that makes it hard to test. Relying on manual tests for this.
-  path <- rappdirs::user_cache_dir(appname) # nocov
-  return(download_path(url, path, redownload)) # nocov
+  path <- rappdirs::user_cache_dir(appname) # nocov start
+  return(
+    download_path(
+      url = url,
+      path = path,
+      filename = filename,
+      process_f = process_f,
+      redownload = redownload,
+      ...
+    )
+  ) # nocov end
 }
