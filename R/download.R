@@ -57,6 +57,10 @@ download_path <- function(url,
     if (is.null(process_f)) {
       utils::download.file(url, path, mode = "wb")
     } else {
+      # Allow for purrr-style formula syntax.
+      process_f <- rlang::as_function(process_f)
+
+      # Save the unprocessed file to temp.
       temp_path <- tempfile(
         fileext = paste0(
           ".",
@@ -65,6 +69,8 @@ download_path <- function(url,
       )
       on.exit(unlink(temp_path))
       utils::download.file(url, temp_path, mode = "wb")
+
+      # Do whatever the processor does.
       process_f(temp_path, path, ...)
     }
   }
