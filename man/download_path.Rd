@@ -43,7 +43,7 @@ and the file hasn't already been downloaded.
 }
 \examples{
 \donttest{
-if(interactive()){
+if (interactive()) {
   download_path(
     url = "https://raw.githubusercontent.com/macmillancontentscience/dlr/main/README.Rmd",
     path = tempdir()

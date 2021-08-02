@@ -41,7 +41,7 @@ defined in \code{\link[rappdirs]{user_cache_dir}}.
 }
 \examples{
 \donttest{
-if(interactive()){
+if (interactive()) {
   download_cache(
     url = "https://raw.githubusercontent.com/macmillancontentscience/dlr/main/README.Rmd",
     appname = "dlr"
