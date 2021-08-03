@@ -27,7 +27,7 @@
 #' @param process_f A function or one-sided formula to load, process, and save
 #'   the downloaded files. The temporary path to the downloaded file is passed
 #'   as the first argument to this function, and the target path is passed as
-#'   the second argument. See the vignette for an example.
+#'   the second argument. See examples.
 #' @param redownload Logical; should the file be redownloaded if it already
 #'   exists locally?
 #' @param ... Additional arguments passed to \code{process_f}.
