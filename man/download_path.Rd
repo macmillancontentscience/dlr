@@ -22,10 +22,10 @@ written.}
 \item{filename}{Character; an optional filename for the file (by default, the
 filename of the remote file is used).}
 
-\item{process_f}{A function or one-sided formula to apply to the downloaded
-file before saving. The temporary path to the downloaded file will be
-passed as the first argument to this function, and the target path will be
-passed as the second argument.}
+\item{process_f}{A function or one-sided formula to load, process, and save
+the downloaded files. The temporary path to the downloaded file is passed
+as the first argument to this function, and the target path is passed as
+the second argument. See the vignette for an example.}
 
 \item{redownload}{Logical; should the file be redownloaded if it already
 exists locally?}
@@ -45,8 +45,23 @@ and the file hasn't already been downloaded.
 \donttest{
 if (interactive()) {
   download_path(
-    url = "https://raw.githubusercontent.com/macmillancontentscience/dlr/main/README.Rmd",
+    url = "https://query.data.world/s/owqxojjiphaypjmlxldsp566lck7co",
     path = tempdir()
+  )
+
+  # Or process before saving.
+  csv_to_rds <- function(temp_file, final_file) {
+    df <- read.csv(
+      temp_file, header = TRUE, stringsAsFactors = FALSE
+    )
+    saveRDS(df, final_file)
+  }
+
+  download_path(
+    url = "https://query.data.world/s/owqxojjiphaypjmlxldsp566lck7co",
+    path = tempdir(),
+    filename = "austin_smoke_free.rds",
+    process_f = csv_to_rds
   )
 }
 }
