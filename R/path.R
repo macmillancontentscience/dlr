@@ -1,10 +1,11 @@
 #' Path to an App Cache Directory
 #'
 #' App cache directories can depend on the user's operating system and an
-#' overall \code{R_USER_CACHE_DIR} environment variable. This function
+#' overall \code{R_USER_CACHE_DIR} environment variable. This function returns
+#' the path that will be used for a given app's cache.
 #'
-#' @param appname Character; the name of the application that will "own" this
-#'   file, such as the name of a package.
+#' @param appname Character; the name of the application that will "own" the
+#'   cache, such as the name of a package.
 #'
 #' @return The full path to the app's cache directory.
 #' @export
