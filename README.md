@@ -29,14 +29,24 @@ devtools::install_github("macmillancontentscience/dlr")
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+This package is intended primarily to be used in other packages. For
+example, you might have a function in your package like this.
 
 ``` r
-library(dlr)
-## basic example code
+get_foo <- function() {
+  # Use dlr to find the cache path. If the file isn't already downloaded, dlr
+  # will download it.
+  cached_file <- dlr::download_cache(
+    url = "https://fake.fake/foo.csv",
+    appname = "myCoolPackage"
+  )
+  
+  # Then do the thing you want to do with that cached file.
+  return(
+    read.csv(cached_file)
+  )
+}
 ```
-
-Example coming soon.
 
 ## Code of Conduct
 

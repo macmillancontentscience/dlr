@@ -25,7 +25,7 @@ filename of the remote file is used).}
 \item{process_f}{A function or one-sided formula to load, process, and save
 the downloaded files. The temporary path to the downloaded file is passed
 as the first argument to this function, and the target path is passed as
-the second argument. See the vignette for an example.}
+the second argument. See examples.}
 
 \item{redownload}{Logical; should the file be redownloaded if it already
 exists locally?}
@@ -52,7 +52,9 @@ if (interactive()) {
   # Or process before saving.
   csv_to_rds <- function(temp_file, final_file) {
     df <- read.csv(
-      temp_file, header = TRUE, stringsAsFactors = FALSE
+      temp_file,
+      header = TRUE,
+      stringsAsFactors = FALSE
     )
     saveRDS(df, final_file)
   }
