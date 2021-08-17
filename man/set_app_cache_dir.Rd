@@ -19,9 +19,7 @@ also set so future calls to \code{\link{app_cache_dir}} will respect the
 change.
 }
 \description{
-Override the default paths used by \code{\link{app_cache_dir}}. It is also
-advised to include this function in \code{.onLoad} for any package that uses
-a cache.
+Override the default paths used by \code{\link{app_cache_dir}}.
 }
 \examples{
 # Executing this function creates a cache directory.

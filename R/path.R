@@ -29,9 +29,7 @@ app_cache_dir <- function(appname) {
 
 #' Set a Cache Directory for an App
 #'
-#' Override the default paths used by \code{\link{app_cache_dir}}. It is also
-#' advised to include this function in \code{.onLoad} for any package that uses
-#' a cache.
+#' Override the default paths used by \code{\link{app_cache_dir}}.
 #'
 #' @inheritParams app_cache_dir
 #' @param cache_dir Character scalar; a path to a cache directory.

@@ -1,0 +1,57 @@
+---
+title: "Integrating into Your Package"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Integrating into Your Package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+The primary purpose of this package is for use within other packages. 
+To do so, you most likely want to wrap some of the exported functions from this package.
+
+## download_cache
+
+The primary use for {dlr} is to download data to an app cache if that data does not already exist.
+Wrap `download_cache` for any files you wish to cache. 
+
+Tip: If you will allow users to download multiple files with different URLs, define the URLs as internal data.
+That way you can edit all URLs in one location without having to search through multiple functions.
+For example, in the example below, `.my_url` is an internal data object with the URL of the file of interest.
+
+```{r download_cache, eval = FALSE}
+my_big_dataset <- function() {
+  filepath <- dlr::download_cache(
+    url = .my_url,
+    appname = "myPackage"
+  )
+  return(readRDS(filepath))
+}
+```
+
+## app_cache_dir
+
+If you want the user to be able to easily determine the location of the cache for your package (often useful even if you don't think it will be), provide a wrapper around `app_cache_dir`
+
+```{r app_cache_dir, eval = FALSE}
+myPackage_cache_dir <- function() {
+  return(dlr::app_cache_dir(appname = "myPackage"))
+}
+```
+
+## set_app_cache_dir
+
+Users will have use cases you aren't prepared for, such as a strange file system or a shared cache directory specifically for your package. Allow them to set up such options with `set_app_cache_dir`.
+
+```{r set_app_cache_dir, eval = FALSE}
+set_myPackage_cache_dir <- function(cache_dir) {
+  return(dlr::set_app_cache_dir(appname = "myPackage", cache_dir = cache_dir))
+}
+```
