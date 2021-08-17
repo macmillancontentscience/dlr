@@ -3,3 +3,5 @@
 export(app_cache_dir)
 export(download_cache)
 export(download_path)
+export(set_app_cache_dir)
+importFrom(rlang,"%||%")
