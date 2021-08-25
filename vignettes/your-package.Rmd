@@ -15,24 +15,46 @@ knitr::opts_chunk$set(
 ```
 
 The primary purpose of this package is for use within other packages. 
-To do so, you most likely want to wrap some of the exported functions from this package.
+To use {dlr}, you most likely want to wrap some of the exported functions from this package.
 
-## download_cache
+## read_or_cache
 
 The primary use for {dlr} is to download data to an app cache if that data does not already exist.
-Wrap `download_cache` for any files you wish to cache. 
+Wrap `read_or_cache` for any files you wish to cache. 
 
 Tip: If you will allow users to download multiple files with different URLs, define the URLs as internal data.
 That way you can edit all URLs in one location without having to search through multiple functions.
-For example, in the example below, `.my_url` is an internal data object with the URL of the file of interest.
+For example, in the example below, `.my_url` is an internal named list with the URLs of the files of interest.
 
-```{r download_cache, eval = FALSE}
-my_big_dataset <- function() {
-  filepath <- dlr::download_cache(
-    url = .my_url,
-    appname = "myPackage"
+```{r read_or_cache, eval = FALSE}
+my_big_dataset <- function(variant = c("small", "medium", "big")) {
+  # Returns the result of downloading and then reading with read.csv.
+  return(
+    dlr::read_or_cache(
+      source_path = .my_urls[[variant]],
+      appname = "myPackage",
+      process_f = read.csv
   )
-  return(readRDS(filepath))
+}
+```
+
+## maybe_cache
+
+An alternative pattern would be to allow users to download (or otherwise process) files which other functions in your package will load.
+For example, perhaps you want to allow the user to download a large lookup table, which will then be used by default by the rest of the package.
+The code to do so would look something like this:
+
+```{r maybe_cache, eval = FALSE}
+download_lookup <- function(variant = c("small", "medium", "big")) {
+  # Returns the path to the processed file, rather than the contents of that
+  # file.
+  return(
+    dlr::maybe_cache(
+      source_path = .my_urls[[variant]],
+      appname = "myPackage",
+      process_f = read.csv
+    )
+  )
 }
 ```
 
@@ -48,7 +70,8 @@ myPackage_cache_dir <- function() {
 
 ## set_app_cache_dir
 
-Users will have use cases you aren't prepared for, such as a strange file system or a shared cache directory specifically for your package. Allow them to set up such options with `set_app_cache_dir`.
+Users will have use cases you aren't prepared for, such as a strange file system or a shared cache directory specifically for your package. 
+Allow them to set up such options with `set_app_cache_dir`.
 
 ```{r set_app_cache_dir, eval = FALSE}
 set_myPackage_cache_dir <- function(cache_dir) {

@@ -1,6 +1,6 @@
 Package: dlr
-Title: Download Files Safely
-Version: 0.0.0.9004
+Title: Download and Cache Files Safely
+Version: 0.0.1
 Authors@R: c(
     person(given = "Jonathan",
            family = "Bratt",
@@ -29,6 +29,7 @@ Suggests:
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Imports: 
+    digest,
     fs,
     rappdirs,
     rlang,
