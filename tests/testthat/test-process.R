@@ -106,7 +106,7 @@ test_that("Can read-or-cache files.", {
 
   # Log the filename we expect the function to use; we don't actually care what
   # this is, but I want to clean up, so let's get what the system is using.
-  auto_filename <- construct_cache_filename(
+  auto_filename <- construct_cached_file_path(
     source_path = test_source,
     appname = "testing"
   )

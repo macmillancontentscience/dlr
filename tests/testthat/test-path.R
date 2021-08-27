@@ -61,7 +61,7 @@ test_that("Can construct processed filenames.", {
   # it's normalized, but I want to keep the normalization and don't want to
   # double-wrap it.
   expect_identical(
-    construct_cache_filename(
+    construct_cached_file_path(
       source_path = url_path,
       appname = "myApp"
     ),

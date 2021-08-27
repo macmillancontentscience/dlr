@@ -136,12 +136,12 @@ construct_processed_filename <- function(source_path,
 #'   \code{http://}, \code{FALSE} otherwise).
 #' @keywords internal
 .is_url <- function(source_path) {
-  grepl("^(ht|f)tps*://", source_path)
+  grepl("^(ht|f)tps?://", source_path)
 }
 
-#' Construct Cache Filename
+#' Construct Cache Path
 #'
-#' Construct the filename for the cached version of a file within a particular
+#' Construct the full path to the cached version of a file within a particular
 #' app's cache, using the source path of the file to make sure the cache
 #' filename is unique.
 #'
@@ -153,14 +153,14 @@ construct_processed_filename <- function(source_path,
 #' @export
 #'
 #' @examples
-#' construct_cache_filename(
+#' construct_cached_file_path(
 #'   source_path = "my/file.txt",
 #'   appname = "dlr",
 #'   extension = "rds"
 #' )
-construct_cache_filename <- function(source_path,
-                                     appname,
-                                     extension = "") {
+construct_cached_file_path <- function(source_path,
+                                       appname,
+                                       extension = "") {
   return(
     normalizePath(
       fs::path(

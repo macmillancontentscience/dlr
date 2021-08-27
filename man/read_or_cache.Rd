@@ -73,7 +73,7 @@ if (interactive()) {
 
 if (interactive()) {
   # Calling the function a second time gives the result instantly.
-  austin_smoke_free <- read_or_process(
+  austin_smoke_free <- read_or_cache(
     "https://query.data.world/s/owqxojjiphaypjmlxldsp566lck7co",
     appname = "dlr",
     process_f = read.csv
@@ -84,7 +84,7 @@ if (interactive()) {
 if (interactive()) {
   # Remove the generated file.
   unlink(
-    construct_cache_filename(
+    construct_cached_file_path(
       "https://query.data.world/s/owqxojjiphaypjmlxldsp566lck7co"
     )
   )

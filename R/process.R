@@ -158,7 +158,7 @@ read_or_process <- function(source_path,
 #'
 #' if (interactive()) {
 #'   # Calling the function a second time gives the result instantly.
-#'   austin_smoke_free <- read_or_process(
+#'   austin_smoke_free <- read_or_cache(
 #'     "https://query.data.world/s/owqxojjiphaypjmlxldsp566lck7co",
 #'     appname = "dlr",
 #'     process_f = read.csv
@@ -169,7 +169,7 @@ read_or_process <- function(source_path,
 #' if (interactive()) {
 #'   # Remove the generated file.
 #'   unlink(
-#'     construct_cache_filename(
+#'     construct_cached_file_path(
 #'       "https://query.data.world/s/owqxojjiphaypjmlxldsp566lck7co"
 #'     )
 #'   )
@@ -301,8 +301,8 @@ maybe_cache <- function(source_path,
                         write_f = saveRDS,
                         write_args = NULL,
                         force_process = FALSE) {
-  # This is cognate to read_or_cache. It wrapsmaybe_process in much the same way
-  # read_or_cache wraps read_or_process.
+  # This is cognate to read_or_cache. It wraps maybe_process in much the same
+  # way read_or_cache wraps read_or_process.
 
   # Protect against NULL filename.
   if (is.null(filename)) {
