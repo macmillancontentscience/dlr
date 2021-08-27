@@ -8,7 +8,8 @@
 
 The goal of dlr is to provide a friendly wrapper around the common
 pattern of downloading a file if that file does not already exist
-locally.
+locally. We also allow for related file-processing tasks, such as
+processing a local file once into the format you’ll need in the future.
 
 ## Installation
 
@@ -35,15 +36,13 @@ example, you might have a function in your package like this.
 ``` r
 get_foo <- function() {
   # Use dlr to find the cache path. If the file isn't already downloaded, dlr
-  # will download it.
-  cached_file <- dlr::download_cache(
-    url = "https://fake.fake/foo.csv",
-    appname = "myCoolPackage"
-  )
-  
-  # Then do the thing you want to do with that cached file.
+  # will download it, process it, and save it as an RDS.
   return(
-    read.csv(cached_file)
+    dlr::read_or_cache(
+      source_path = "https://fake.fake/foo.csv",
+      appname = "myCoolPackage",
+      process_f = read.csv
+    )
   )
 }
 ```
