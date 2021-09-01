@@ -62,7 +62,7 @@ test_that("The maybe functions work.", {
 
   # Make sure auto_filename is in tempdir, but otherwise don't worry about it.
   expect_true(
-    startsWith(auto_filename, tempdir())
+    startsWith(auto_filename, normalizePath(tempdir()))
   )
 
   test_result <- readRDS(auto_filename)
