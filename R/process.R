@@ -41,8 +41,6 @@
 #' @param force_process A logical scalar indicating whether we should process
 #'   the source file even if the target already exists. This can be particularly
 #'   useful if you wish to redownload a file.
-#' @param delete_source A logical scalar indicating whether we should delete the
-#'   source file after processing.
 #'
 #' @return The processed object.
 #' @export
