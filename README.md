@@ -17,8 +17,7 @@ You can install the released version of dlr from
 [CRAN](https://CRAN.R-project.org) with:
 
 ``` r
-# Not yet.
-# install.packages("dlr")
+install.packages("dlr")
 ```
 
 And the development version from [GitHub](https://github.com/) with:
