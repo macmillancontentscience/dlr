@@ -106,7 +106,7 @@ read_or_process <- function(source_path,
     # nocov end
   }
 
-  target_path <- normalizePath(target_path, mustWork = FALSE)
+  target_path <- fs::path_norm(target_path)
 
   # fs::file_exists provides better explanations of why things failed than base
   # file.exists.
@@ -253,7 +253,7 @@ maybe_process <- function(source_path,
     source_path <- tempfile()
   } # nocov end
 
-  target_path <- normalizePath(target_path, mustWork = FALSE)
+  target_path <- fs::path_norm(target_path)
 
   # fs::file_exists provides better explanations of why things failed than base
   # file.exists.

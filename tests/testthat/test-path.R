@@ -15,20 +15,14 @@
 test_that("Can determine app dir.", {
   expect_identical(
     app_cache_dir("testing"),
-    normalizePath(
-      rappdirs::user_cache_dir(appname = "testing"),
-      mustWork = FALSE
-    )
+    fs::path_norm(rappdirs::user_cache_dir(appname = "testing"))
   )
 
   old_option <- options(testing.dir = "/fake/path")
   on.exit(options(old_option))
   expect_identical(
     app_cache_dir("testing"),
-    normalizePath(
-      "/fake/path",
-      mustWork = FALSE
-    )
+    fs::path_norm("/fake/path")
   )
 })
 
@@ -79,12 +73,11 @@ test_that("Can construct processed filenames.", {
       source_path = url_path,
       appname = "myApp"
     ),
-    normalizePath(
+    fs::path_norm(
       fs::path(
         app_cache_dir(appname = "myApp"),
         construct_processed_filename(source_path = url_path)
-      ),
-      mustWork = FALSE
+      )
     )
   )
 })
