@@ -22,8 +22,8 @@ change.
 Override the default paths used by \code{\link{app_cache_dir}}.
 }
 \examples{
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # Executing this function creates a cache directory.
-\donttest{
 set_app_cache_dir(appname = "dlr", cache_dir = "/my/cache/path")
-}
+\dontshow{\}) # examplesIf}
 }
