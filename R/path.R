@@ -54,11 +54,9 @@ app_cache_dir <- function(appname) {
 #'   change.
 #' @export
 #'
-#' @examples
+#' @examplesIf interactive()
 #' # Executing this function creates a cache directory.
-#' \donttest{
 #' set_app_cache_dir(appname = "dlr", cache_dir = "/my/cache/path")
-#' }
 set_app_cache_dir <- function(appname, cache_dir = NULL) {
   # Testing this creates directories on the user's system, so I am testing this
   # manually for now.
