@@ -1,3 +1,7 @@
+# dlr 1.0.1
+
+* Updated package to use `fs::path_norm` to work more seamlessly between platforms.
+
 # dlr 1.0.0
 
 * Initial CRAN release.

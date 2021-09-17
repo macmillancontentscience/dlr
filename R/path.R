@@ -37,7 +37,7 @@ app_cache_dir <- function(appname) {
     rappdirs::user_cache_dir(appname = appname)
 
   return(
-    normalizePath(cache_dir, mustWork = FALSE)
+    fs::path_norm(cache_dir)
   )
 }
 
@@ -66,7 +66,7 @@ set_app_cache_dir <- function(appname, cache_dir = NULL) {
   # nocov start
   cache_dir <- cache_dir %||%
     app_cache_dir(appname = appname)
-  cache_dir <- normalizePath(cache_dir, mustWork = FALSE)
+  cache_dir <- fs::path_norm(cache_dir)
 
   if (!file.exists(cache_dir)) {
     fs::dir_create(cache_dir, recurse = TRUE)
@@ -110,7 +110,7 @@ construct_processed_filename <- function(source_path,
 
   # Hack to make this useful for both URLs and local files.
   if (!.is_url(source_path)) {
-    dirpath <- normalizePath(source_path, mustWork = FALSE)
+    dirpath <- fs::path_norm(source_path)
   }
 
   path_hash <- digest::digest(dirpath, algo = "xxhash32")
@@ -162,15 +162,14 @@ construct_cached_file_path <- function(source_path,
                                        appname,
                                        extension = "") {
   return(
-    normalizePath(
+    fs::path_norm(
       fs::path(
         app_cache_dir(appname),
         construct_processed_filename(
           source_path = source_path,
           extension = extension
         )
-      ),
-      mustWork = FALSE
+      )
     )
   )
 }

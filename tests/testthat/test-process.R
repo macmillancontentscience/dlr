@@ -38,9 +38,10 @@ test_that("The maybe functions work.", {
     write_f = saveRDS
   )
 
+  # Make sure these are seen as the same on all systems.
   expect_identical(
-    test_result,
-    normalizePath(test_target)
+    fs::path_norm(test_result),
+    fs::path_norm(test_target)
   )
 
   test_result <- readRDS(test_target)
@@ -62,7 +63,7 @@ test_that("The maybe functions work.", {
 
   # Make sure auto_filename is in tempdir, but otherwise don't worry about it.
   expect_true(
-    startsWith(auto_filename, normalizePath(tempdir()))
+    startsWith(auto_filename, fs::path_norm(tempdir()))
   )
 
   test_result <- readRDS(auto_filename)
