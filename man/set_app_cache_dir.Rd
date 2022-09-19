@@ -15,11 +15,11 @@ cache, such as the name of a package.}
 \value{
 A normalized path to a cache directory. The directory is created if
 the user has write access and the directory does not exist. An option is
-also set so future calls to \code{\link{app_cache_dir}} will respect the
+also set so future calls to \code{\link[=app_cache_dir]{app_cache_dir()}} will respect the
 change.
 }
 \description{
-Override the default paths used by \code{\link{app_cache_dir}}.
+Override the default paths used by \code{\link[=app_cache_dir]{app_cache_dir()}}.
 }
 \examples{
 \dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}

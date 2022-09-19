@@ -10,9 +10,8 @@
 \item{source_path}{Character; the path to check.}
 }
 \value{
-Logical indicating whether that looks like a url (\code{TRUE} if it
-starts with \code{http://}, \code{http://}, \code{http://}, or
-\code{http://}, \code{FALSE} otherwise).
+Logical indicating whether that looks like a url (\code{TRUE} if it starts
+with \verb{http://}, \verb{https://}, \verb{ftp://}, or \verb{ftps://}, \code{FALSE} otherwise).
 }
 \description{
 Determine if Path is a URL

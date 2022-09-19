@@ -13,7 +13,7 @@
 
 \item{main_args}{A list containing the first argument(s) to \code{do_f}.}
 
-\item{extra_args}{A list containing any additional arguments to \code{do_f}}
+\item{extra_args}{A list containing any additional arguments to \code{do_f}.}
 }
 \value{
 The return from the call to \code{do_f}.

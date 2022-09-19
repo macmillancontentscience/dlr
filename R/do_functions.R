@@ -17,7 +17,7 @@
 #' @param path Character scalar; the full path to the file.
 #' @param read_f The function to use to read and process the file. The first
 #'   argument to this function must be the path to the file.
-#' @param read_args Additional arguments to \code{read_f}.
+#' @param read_args Additional arguments to `read_f`.
 #'
 #' @return The processed file.
 #' @keywords internal
@@ -43,9 +43,9 @@
 #' @param write_f The function to use to write the file. The first argument to
 #'   this function must be the object, and the second argument must be the path
 #'   to the file.
-#' @param write_args Additional arguments to \code{write_f}.
+#' @param write_args Additional arguments to `write_f`.
 #'
-#' @return The return from the call to \code{write_f}.
+#' @return The return from the call to `write_f`.
 #' @keywords internal
 .write_object <- function(object,
                           target_path,
@@ -69,11 +69,11 @@
 #' Do a Function Call
 #'
 #' @param do_f The function to call.
-#' @param default_f The function to call if \code{do_f} is \code{NULL}.
-#' @param main_args A list containing the first argument(s) to \code{do_f}.
-#' @param extra_args A list containing any additional arguments to \code{do_f}
+#' @param default_f The function to call if `do_f` is `NULL`.
+#' @param main_args A list containing the first argument(s) to `do_f`.
+#' @param extra_args A list containing any additional arguments to `do_f`.
 #'
-#' @return The return from the call to \code{do_f}.
+#' @return The return from the call to `do_f`.
 #' @keywords internal
 .do_function <- function(do_f, default_f, main_args, extra_args = NULL) {
   if (is.null(do_f)) {
@@ -133,11 +133,15 @@
 #'   the raw file after it is downloaded. The path to the downloaded file will
 #'   be passed as the first argument to this function.
 #'
-#' @return The processed data returned by \code{process_f}.
+#' @return The processed data returned by `process_f`.
 #' @keywords internal
 .download_then <- function(process_f) {
   # nocov start; I tried testing this directly, but covr gets weird. It's tested
   # as part of manual download tests.
+
+  # Warn if they have the default download timeout (and we haven't warned yet).
+  .warn_timeout()
+
   process_f <- rlang::as_function(process_f)
   return(
     function(temp_path, url, ...) {
@@ -149,4 +153,51 @@
     }
   )
   # nocov end
+}
+
+#' Warn About Default Timeout
+#'
+#' @return `TRUE` (invisibly).
+#' @keywords internal
+.warn_timeout <- function() {
+  current_timeout <- getOption("timeout", default = 0L)
+  if (
+    !getOption("dlr_timeout_warned", default = FALSE) && current_timeout < 600L
+  ) {
+    options("dlr_timeout_warned" = TRUE)
+    cli::cli_warn(
+      c(
+        "!" = glue::glue("Your timeout is set to {current_timeout} seconds."),
+        i = glue::glue(
+          "Call `dlr::set_timeout()` to set this timeout to something ",
+          "more reasonable for large file downloads."
+        ),
+        i = "This message appears once per session."
+      )
+    )
+  }
+  return(invisible(TRUE))
+}
+
+#' Set Download Timeout
+#'
+#' The default timeout for downloads is 60 seconds. This is not long enough for
+#' many of the files that are downloaded using this package. We therefore supply
+#' a convenience function to easily change this setting. You can permanently
+#' change this default by setting `R_DEFAULT_INTERNET_TIMEOUT` in your
+#' `.Renviron`.
+#'
+#' @param seconds The number of seconds to set as the timeout (default 600
+#'   seconds).
+#'
+#' @return A list with the old `timeout` setting (invisibly).
+#' @export
+#'
+#' @examples
+#' getOption("timeout")
+#' old_setting <- set_timeout()
+#' getOption("timeout")
+#' options(old_setting)
+set_timeout <- function(seconds = 600L) {
+  return(options("timeout" = seconds))
 }

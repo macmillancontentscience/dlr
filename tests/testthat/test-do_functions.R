@@ -22,3 +22,54 @@ test_that("Corner cases work.", {
     mean(1:10)
   )
 })
+
+test_that("set_timeout works.", {
+  old_option_value <- getOption("timeout")
+  set_option <- set_timeout()
+  expect_identical(
+    set_option$timeout,
+    old_option_value
+  )
+  expect_identical(
+    getOption("timeout"),
+    600L
+  )
+  set_timeout(10000L)
+  expect_identical(
+    getOption("timeout"),
+    10000L
+  )
+  options(set_option)
+})
+
+test_that(".warn_timeout works.", {
+  old_options <- options(
+    timeout = 60L,
+    dlr_timeout_warned = NULL
+  )
+  expect_warning(
+    .warn_timeout(),
+    "Your timeout is set to 60 seconds"
+  )
+  options(
+    timeout = 100L,
+    dlr_timeout_warned = FALSE
+  )
+  expect_warning(
+    .warn_timeout(),
+    "Your timeout is set to 100 seconds"
+  )
+  expect_warning(
+    .warn_timeout(),
+    NA
+  )
+  options(
+    timeout = 1000L,
+    dlr_timeout_warned = NULL
+  )
+  expect_warning(
+    .warn_timeout(),
+    NA
+  )
+  options(old_options)
+})

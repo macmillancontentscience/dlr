@@ -15,10 +15,10 @@
 #' Path to an App Cache Directory
 #'
 #' App cache directories can depend on the user's operating system and an
-#' overall \code{R_USER_CACHE_DIR} environment variable. We also respect a
-#' per-app option (\code{appname.dir}), and a per-app environment variable
-#' (\code{APPNAME_CACHE_DIR}. This function returns the path that will be used
-#' for a given app's cache.
+#' overall `R_USER_CACHE_DIR` environment variable. We also respect a per-app
+#' option (`appname.dir`), and a per-app environment variable
+#' (`APPNAME_CACHE_DIR`). This function returns the path that will be used for a
+#' given app's cache.
 #'
 #' @param appname Character; the name of the application that will "own" the
 #'   cache, such as the name of a package.
@@ -43,14 +43,14 @@ app_cache_dir <- function(appname) {
 
 #' Set a Cache Directory for an App
 #'
-#' Override the default paths used by \code{\link{app_cache_dir}}.
+#' Override the default paths used by [app_cache_dir()].
 #'
 #' @inheritParams app_cache_dir
 #' @param cache_dir Character scalar; a path to a cache directory.
 #'
 #' @return A normalized path to a cache directory. The directory is created if
 #'   the user has write access and the directory does not exist. An option is
-#'   also set so future calls to \code{\link{app_cache_dir}} will respect the
+#'   also set so future calls to [app_cache_dir()] will respect the
 #'   change.
 #' @export
 #'
@@ -72,8 +72,8 @@ set_app_cache_dir <- function(appname, cache_dir = NULL) {
     # file.access returns 0 for success because it hates clean code. The user
     # has to have read permissions for this function.
     if (file.access(cache_dir, 4) != 0) {
-      rlang::abort(
-        message = paste("You do not have read access to", cache_dir),
+      cli::cli_abort(
+        message = glue::glue("You do not have read access to {cache_dir}"),
         class = "dir_read_error"
       )
     }
@@ -129,9 +129,8 @@ construct_processed_filename <- function(source_path,
 #'
 #' @param source_path Character; the path to check.
 #'
-#' @return Logical indicating whether that looks like a url (\code{TRUE} if it
-#'   starts with \code{http://}, \code{http://}, \code{http://}, or
-#'   \code{http://}, \code{FALSE} otherwise).
+#' @return Logical indicating whether that looks like a url (`TRUE` if it starts
+#'   with `http://`, `https://`, `ftp://`, or `ftps://`, `FALSE` otherwise).
 #' @keywords internal
 .is_url <- function(source_path) {
   grepl("^(ht|f)tps?://", source_path)

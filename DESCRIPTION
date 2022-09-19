@@ -1,6 +1,6 @@
 Package: dlr
 Title: Download and Cache Files Safely
-Version: 1.0.1
+Version: 1.0.1.9000
 Authors@R: c(
     person(given = "Jonathan",
            family = "Bratt",
@@ -21,15 +21,17 @@ License: Apache License (>= 2)
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.1
 Suggests: 
     knitr,
     rmarkdown,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Imports: 
+    cli,
     digest,
     fs,
+    glue,
     rappdirs,
     rlang,
     utils

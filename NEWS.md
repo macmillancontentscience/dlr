@@ -1,3 +1,7 @@
+# dlr 1.0.1.9000
+
+* Added `set_timeout()` and internal timeout checks to guide users through using `{dlr}` with large downloads.
+
 # dlr 1.0.1
 
 * Updated package to use `fs::path_norm` to work more seamlessly between platforms.

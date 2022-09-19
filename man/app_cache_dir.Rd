@@ -15,10 +15,10 @@ The full path to the app's cache directory.
 }
 \description{
 App cache directories can depend on the user's operating system and an
-overall \code{R_USER_CACHE_DIR} environment variable. We also respect a
-per-app option (\code{appname.dir}), and a per-app environment variable
-(\code{APPNAME_CACHE_DIR}. This function returns the path that will be used
-for a given app's cache.
+overall \code{R_USER_CACHE_DIR} environment variable. We also respect a per-app
+option (\code{appname.dir}), and a per-app environment variable
+(\code{APPNAME_CACHE_DIR}). This function returns the path that will be used for a
+given app's cache.
 }
 \examples{
 app_cache_dir("myApp")
