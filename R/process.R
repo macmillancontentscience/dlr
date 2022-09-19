@@ -19,25 +19,23 @@
 #' so that the file does not need to be processed the next time it is loaded.
 #'
 #' @param source_path Character scalar; the path to the raw file. Paths starting
-#'   with \code{http://}, \code{http://}, \code{http://}, or \code{http://} will
-#'   be downloaded to a temp file if the processed version is not already
-#'   available.
+#'   with `http://`, `https://`, `ftp://`, or `ftps://` will be downloaded to a
+#'   temp file if the processed version is not already available.
 #' @param target_path Character scalar; the path where the processed version of
 #'   the file should be stored.
 #' @param process_f A function or one-sided formula to use to process the source
-#'   file. \code{source_path} will be passed as the first argument to this
-#'   function. Defaults to \code{read_f}.
-#' @param process_args An optional list of additional arguments to
-#'   \code{process_f}.
+#'   file. `source_path` will be passed as the first argument to this function.
+#'   Defaults to `read_f`.
+#' @param process_args An optional list of additional arguments to `process_f`.
 #' @param read_f A function or one-sided formula to use to read the processed
-#'   file. \code{target_path} will be passed as the first argument to this
-#'   function. Defaults to \code{\link[base]{readRDS}}.
-#' @param read_args An optional list of additional arguments to \code{read_f}.
+#'   file. `target_path` will be passed as the first argument to this function.
+#'   Defaults to [base::readRDS()].
+#' @param read_args An optional list of additional arguments to `read_f`.
 #' @param write_f A function or one-sided formula to use to save the processed
 #'   file. The processed object will be passed as the first argument to this
-#'   function, and \code{target_path} will be passed as the second argument.
-#'   Defaults to \code{\link[base]{saveRDS}}.
-#' @param write_args An optional list of additional arguments to \code{write_f}.
+#'   function, and `target_path` will be passed as the second argument. Defaults
+#'   to [base::saveRDS()].
+#' @param write_args An optional list of additional arguments to `write_f`.
 #' @param force_process A logical scalar indicating whether we should process
 #'   the source file even if the target already exists. This can be particularly
 #'   useful if you wish to redownload a file.
@@ -133,14 +131,14 @@ read_or_process <- function(source_path,
 
 #' Read or Cache a File
 #'
-#' This function wraps \code{\link{read_or_process}}, specifying an app's cache
-#' directory as the target directory.
+#' This function wraps [read_or_process()], specifying an app's cache directory
+#' as the target directory.
 #'
 #' @inheritParams read_or_process
 #' @inheritParams app_cache_dir
 #' @param filename Character; an optional filename for the cached version of the
 #'   file. By default, a filename is constructed using
-#'   \code{\link{construct_processed_filename}}
+#'   [construct_processed_filename()].
 #'
 #' @return The processed object.
 #' @export
@@ -217,7 +215,7 @@ read_or_cache <- function(source_path,
 #'
 #' @inheritParams read_or_process
 #'
-#' @return The normalized \code{target_path}.
+#' @return The normalized `target_path`.
 #' @export
 #' @examples
 #' if (interactive()) {
@@ -273,12 +271,11 @@ maybe_process <- function(source_path,
 
 #' Cache a File if Necessary
 #'
-#' This function wraps \code{\link{maybe_process}}, specifying the app's cache
-#' directory.
+#' This function wraps [maybe_process()], specifying the app's cache directory.
 #'
 #' @inheritParams read_or_cache
 #'
-#' @return The normalized \code{target_path}.
+#' @return The normalized `target_path`.
 #' @export
 #' @examples
 #' if (interactive()) {

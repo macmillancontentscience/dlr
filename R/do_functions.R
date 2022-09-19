@@ -17,7 +17,7 @@
 #' @param path Character scalar; the full path to the file.
 #' @param read_f The function to use to read and process the file. The first
 #'   argument to this function must be the path to the file.
-#' @param read_args Additional arguments to \code{read_f}.
+#' @param read_args Additional arguments to `read_f`.
 #'
 #' @return The processed file.
 #' @keywords internal
@@ -43,9 +43,9 @@
 #' @param write_f The function to use to write the file. The first argument to
 #'   this function must be the object, and the second argument must be the path
 #'   to the file.
-#' @param write_args Additional arguments to \code{write_f}.
+#' @param write_args Additional arguments to `write_f`.
 #'
-#' @return The return from the call to \code{write_f}.
+#' @return The return from the call to `write_f`.
 #' @keywords internal
 .write_object <- function(object,
                           target_path,
@@ -69,11 +69,11 @@
 #' Do a Function Call
 #'
 #' @param do_f The function to call.
-#' @param default_f The function to call if \code{do_f} is \code{NULL}.
-#' @param main_args A list containing the first argument(s) to \code{do_f}.
-#' @param extra_args A list containing any additional arguments to \code{do_f}
+#' @param default_f The function to call if `do_f` is `NULL`.
+#' @param main_args A list containing the first argument(s) to `do_f`.
+#' @param extra_args A list containing any additional arguments to `do_f`.
 #'
-#' @return The return from the call to \code{do_f}.
+#' @return The return from the call to `do_f`.
 #' @keywords internal
 .do_function <- function(do_f, default_f, main_args, extra_args = NULL) {
   if (is.null(do_f)) {
@@ -133,7 +133,7 @@
 #'   the raw file after it is downloaded. The path to the downloaded file will
 #'   be passed as the first argument to this function.
 #'
-#' @return The processed data returned by \code{process_f}.
+#' @return The processed data returned by `process_f`.
 #' @keywords internal
 .download_then <- function(process_f) {
   # nocov start; I tried testing this directly, but covr gets weird. It's tested

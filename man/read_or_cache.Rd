@@ -19,34 +19,32 @@ read_or_cache(
 }
 \arguments{
 \item{source_path}{Character scalar; the path to the raw file. Paths starting
-with \code{http://}, \code{http://}, \code{http://}, or \code{http://} will
-be downloaded to a temp file if the processed version is not already
-available.}
+with \verb{http://}, \verb{https://}, \verb{ftp://}, or \verb{ftps://} will be downloaded to a
+temp file if the processed version is not already available.}
 
 \item{appname}{Character; the name of the application that will "own" the
 cache, such as the name of a package.}
 
 \item{filename}{Character; an optional filename for the cached version of the
 file. By default, a filename is constructed using
-\code{\link{construct_processed_filename}}}
+\code{\link[=construct_processed_filename]{construct_processed_filename()}}.}
 
 \item{process_f}{A function or one-sided formula to use to process the source
-file. \code{source_path} will be passed as the first argument to this
-function. Defaults to \code{read_f}.}
+file. \code{source_path} will be passed as the first argument to this function.
+Defaults to \code{read_f}.}
 
-\item{process_args}{An optional list of additional arguments to
-\code{process_f}.}
+\item{process_args}{An optional list of additional arguments to \code{process_f}.}
 
 \item{read_f}{A function or one-sided formula to use to read the processed
-file. \code{target_path} will be passed as the first argument to this
-function. Defaults to \code{\link[base]{readRDS}}.}
+file. \code{target_path} will be passed as the first argument to this function.
+Defaults to \code{\link[base:readRDS]{base::readRDS()}}.}
 
 \item{read_args}{An optional list of additional arguments to \code{read_f}.}
 
 \item{write_f}{A function or one-sided formula to use to save the processed
 file. The processed object will be passed as the first argument to this
-function, and \code{target_path} will be passed as the second argument.
-Defaults to \code{\link[base]{saveRDS}}.}
+function, and \code{target_path} will be passed as the second argument. Defaults
+to \code{\link[base:readRDS]{base::saveRDS()}}.}
 
 \item{write_args}{An optional list of additional arguments to \code{write_f}.}
 
@@ -58,8 +56,8 @@ useful if you wish to redownload a file.}
 The processed object.
 }
 \description{
-This function wraps \code{\link{read_or_process}}, specifying an app's cache
-directory as the target directory.
+This function wraps \code{\link[=read_or_process]{read_or_process()}}, specifying an app's cache directory
+as the target directory.
 }
 \examples{
 if (interactive()) {
