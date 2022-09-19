@@ -77,13 +77,11 @@ read_or_process <- function(source_path,
                             write_args = NULL,
                             force_process = FALSE) {
   if (xor(missing(read_f), missing(write_f))) {
-    message <- paste(
-      "read_f and write_f must be a matched pair.",
-      "Please specify both read_f and write_f, or neither.",
-      sep = "\n"
-    )
-    rlang::abort(
-      message = message,
+    cli::cli_abort(
+      message = c(
+        "read_f and write_f must be a matched pair.",
+        i = "Please specify both read_f and write_f, or neither."
+      ),
       class = "read_write_mismatch"
     )
   }

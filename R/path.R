@@ -72,8 +72,8 @@ set_app_cache_dir <- function(appname, cache_dir = NULL) {
     # file.access returns 0 for success because it hates clean code. The user
     # has to have read permissions for this function.
     if (file.access(cache_dir, 4) != 0) {
-      rlang::abort(
-        message = paste("You do not have read access to", cache_dir),
+      cli::cli_abort(
+        message = glue::glue("You do not have read access to {cache_dir}"),
         class = "dir_read_error"
       )
     }
