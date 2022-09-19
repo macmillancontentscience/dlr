@@ -169,7 +169,7 @@
       c(
         "!" = glue::glue("Your timeout is set to {current_timeout} seconds."),
         i = glue::glue(
-          "Call `dlr::increase_timeout()` to set this timeout to something ",
+          "Call `dlr::set_timeout()` to set this timeout to something ",
           "more reasonable for large file downloads."
         ),
         i = "This message appears once per session."
@@ -179,7 +179,7 @@
   return(invisible(TRUE))
 }
 
-#' Increase Download Timeout
+#' Set Download Timeout
 #'
 #' The default timeout for downloads is 60 seconds. This is not long enough for
 #' many of the files that are downloaded using this package. We therefore supply

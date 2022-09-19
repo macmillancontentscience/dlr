@@ -2,7 +2,7 @@
 % Please edit documentation in R/do_functions.R
 \name{set_timeout}
 \alias{set_timeout}
-\title{Increase Download Timeout}
+\title{Set Download Timeout}
 \usage{
 set_timeout(seconds = 600L)
 }
