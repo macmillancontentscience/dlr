@@ -26,6 +26,47 @@ test_that("Can determine app dir.", {
   )
 })
 
+test_that("Messaging works.", {
+  expect_warning(
+    .cache_dir_messaging(
+      appname = "fakeapp",
+      cache_dir = "bad_dir",
+      message_style = "warning",
+      verbose = TRUE
+    ),
+    "bad_dir does not exist"
+  )
+
+  expect_error(
+    .cache_dir_messaging(
+      appname = "fakeapp",
+      cache_dir = "bad_dir",
+      verbose = TRUE
+    ),
+    "bad_dir does not exist"
+  )
+
+  expect_error(
+    .cache_dir_messaging(
+      appname = "fakeapp",
+      cache_dir = "bad_dir",
+      message_style = NULL,
+      verbose = TRUE
+    ),
+    "bad_dir does not exist"
+  )
+
+  expect_error(
+    .cache_dir_messaging(
+      appname = "fakeapp",
+      cache_dir = "bad_dir",
+      message_style = "literally anything",
+      verbose = TRUE
+    ),
+    "bad_dir does not exist"
+  )
+})
+
 test_that("Can construct processed filenames.", {
   # I only directly test this for a URL because the exact output for a file
   # changes from user to user, since the file is (rightly, I think) based on the

@@ -4,7 +4,7 @@
 \alias{app_cache_dir}
 \title{Path to an App Cache Directory}
 \usage{
-app_cache_dir(appname)
+app_cache_dir(appname, verbose = interactive())
 }
 \arguments{
 \item{appname}{Character; the name of the application that will "own" the
