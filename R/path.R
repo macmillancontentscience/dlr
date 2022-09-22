@@ -140,7 +140,7 @@ create_app_cache_dir <- function(appname) {
     } else if (file.access(cache_dir, 4) != 0) { # nocov start
       # file.access returns 0 for success because it hates clean code. The user
       # has to have read permissions for this function. I can't figure out a
-      # good way to test the case where they directory exists but this user
+      # good way to test the case where the directory exists but this user
       # doesn't have read access to it.
       message_function(
         message = glue::glue("You do not have read access to {cache_dir}"),
