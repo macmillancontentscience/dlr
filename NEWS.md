@@ -1,6 +1,7 @@
 # dlr 1.0.1.9000
 
-* Added `set_timeout()` and internal timeout checks to guide users through using `{dlr}` with large downloads.
+* Added `set_timeout()` and internal timeout checks to guide users through using `{dlr}` with large downloads (#18).
+* Added `create_app_cache_dir()` and an option in `app_cache_dir()` to more easily create the cache directory for a given app (#17).
 
 # dlr 1.0.1
 

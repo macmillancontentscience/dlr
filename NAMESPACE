@@ -3,6 +3,7 @@
 export(app_cache_dir)
 export(construct_cached_file_path)
 export(construct_processed_filename)
+export(create_app_cache_dir)
 export(maybe_cache)
 export(maybe_process)
 export(read_or_cache)

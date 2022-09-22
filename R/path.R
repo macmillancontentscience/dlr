@@ -28,7 +28,7 @@
 #'
 #' @examples
 #' app_cache_dir("myApp")
-app_cache_dir <- function(appname) {
+app_cache_dir <- function(appname, verbose = interactive()) {
   cache_env <- Sys.getenv(paste0(toupper(appname), "_CACHE_DIR"))
   if (cache_env == "") cache_env <- NULL
 
@@ -36,9 +36,17 @@ app_cache_dir <- function(appname) {
     cache_env %||%
     rappdirs::user_cache_dir(appname = appname)
 
-  return(
-    fs::path_norm(cache_dir)
+  cache_dir <- fs::path_norm(cache_dir)
+
+  # Potentially alert the user if there's a problem with the app dir.
+  .cache_dir_messaging(
+    appname = appname,
+    cache_dir = cache_dir,
+    message_style = "warning",
+    verbose = verbose
   )
+
+  return(cache_dir)
 }
 
 #' Set a Cache Directory for an App
@@ -63,26 +71,84 @@ set_app_cache_dir <- function(appname, cache_dir = NULL) {
 
   # nocov start
   cache_dir <- cache_dir %||%
-    app_cache_dir(appname = appname)
+    app_cache_dir(appname = appname, verbose = FALSE)
   cache_dir <- fs::path_norm(cache_dir)
 
   if (!file.exists(cache_dir)) {
     fs::dir_create(cache_dir, recurse = TRUE)
   } else {
-    # file.access returns 0 for success because it hates clean code. The user
-    # has to have read permissions for this function.
-    if (file.access(cache_dir, 4) != 0) {
-      cli::cli_abort(
-        message = glue::glue("You do not have read access to {cache_dir}"),
-        class = "dir_read_error"
-      )
-    }
+    .cache_dir_messaging(
+      appname = appname,
+      cache_dir = cache_dir,
+      message_style = "abort",
+      verbose = TRUE
+    )
   }
 
   options(rlang::set_names(list(cache_dir), paste0(appname, ".dir")))
 
   return(cache_dir)
   # nocov end
+}
+
+#' Create a Cache Directory for an App
+#'
+#' Create the default path expected by [app_cache_dir()].
+#'
+#' @inheritParams app_cache_dir
+#'
+#' @return A normalized path to a cache directory. The directory is created if
+#'   the user has write access and the directory does not exist.
+#' @export
+#'
+#' @examplesIf interactive()
+#' # Executing this function creates a cache directory.
+#' create_app_cache_dir("dlr")
+create_app_cache_dir <- function(appname) {
+  # Testing this would create a directory in a default location, so I'm just
+  # testing manually.
+  return(set_app_cache_dir(appname)) # nocov
+}
+
+#' Reusable Path Permissions Messaging
+#'
+#' @inheritParams app_cache_dir
+#' @param cache_dir The directory that will be used for caching.
+#' @param message_style Whether to "abort" (default) or issue a "warning".
+#' @param verbose Whether to issue the messages (included for easier usage in
+#'   other functions).
+#'
+#' @return `TRUE` invisibly.
+#' @keywords internal
+.cache_dir_messaging <- function(appname,
+                                 cache_dir,
+                                 message_style = "abort",
+                                 verbose) {
+  if (verbose) {
+    message_function <- if (isTRUE(message_style == "warning")) {
+      cli::cli_warn
+    } else {
+      cli::cli_abort
+    }
+    if (!file.exists(cache_dir)) {
+      message_function(
+        message = c(
+          glue::glue("{cache_dir} does not exist."),
+          i = glue::glue("Create it with `create_app_cache_dir('{appname}')`")
+        )
+      )
+    } else if (file.access(cache_dir, 4) != 0) { # nocov start
+      # file.access returns 0 for success because it hates clean code. The user
+      # has to have read permissions for this function. I can't figure out a
+      # good way to test the case where the directory exists but this user
+      # doesn't have read access to it.
+      message_function(
+        message = glue::glue("You do not have read access to {cache_dir}"),
+        class = "dir_read_error"
+      )
+    } # nocov end
+  }
+  return(invisible(TRUE))
 }
 
 #' Construct Processed Filename
